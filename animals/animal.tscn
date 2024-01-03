@@ -1,11 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://l27nxl1o6tnx"]
+[gd_scene load_steps=4 format=3 uid="uid://l27nxl1o6tnx"]
 
 [ext_resource type="Texture2D" uid="uid://d1tfyq3lljlu2" path="res://assets/player/parrot.png" id="1_jnh2a"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_di3jd"]
+bounce = 0.2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b4i51"]
 radius = 19.0
 
 [node name="Animal" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_di3jd")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.15, 0.15)
