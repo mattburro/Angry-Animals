@@ -12,4 +12,9 @@ config_version=5
 
 config/name="Angry Animals"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=600
+window/stretch/mode="canvas_items"
