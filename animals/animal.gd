@@ -8,6 +8,7 @@ const DRAG_LIMIT_MAX: Vector2 = Vector2(0, 60)
 const DRAG_LIMIT_MIN: Vector2 = Vector2(-60, 0)
 const IMPULSE_MULTIPLIER: float = 20.0
 const FIRE_DELAY: float = 0.25
+const STOP_THRESHOLD: float = 0.1
 
 var dead: bool = false
 var dragging: bool = false
@@ -29,7 +30,8 @@ func _physics_process(delta):
 	if released:
 		fired_time += delta
 		if fired_time > FIRE_DELAY:
-			play_collision()
+			check_play_collision()
+			check_on_target()
 	else:
 		if !dragging:
 			return
@@ -47,7 +49,25 @@ func update_debug_label() -> void:
 	info_str += "angular v: %0.1f linear v: %s fired_time: %0.1f" % [angular_velocity, Utils.vec2_to_str(linear_velocity), fired_time]
 	SignalManager.on_update_debug_label.emit(info_str)
 
-func play_collision() -> void:
+func stopped_moving() -> bool:
+	if get_contact_count() > 0:
+		if abs(linear_velocity.y) < STOP_THRESHOLD && abs(angular_velocity) < STOP_THRESHOLD:
+			return true
+	
+	return false
+
+func check_on_target():
+	if !stopped_moving():
+		return
+	
+	var colliding_bodies = get_colliding_bodies()
+	if colliding_bodies.size() == 0:
+		return
+	
+	if colliding_bodies[0].is_in_group(GameManager.GROUP_CUP):
+		die()
+
+func check_play_collision() -> void:
 	if last_collision_count == 0 && get_contact_count() > 0:
 		collision_sound.play()
 	

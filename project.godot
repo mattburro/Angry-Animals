@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.2", "Forward Plus")
 [autoload]
 
 SignalManager="*res://singletons/signal_manager.gd"
+GameManager="*res://singletons/game_manager.gd"
 
 [display]
 
