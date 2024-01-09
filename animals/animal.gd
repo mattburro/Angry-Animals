@@ -2,10 +2,12 @@ extends RigidBody2D
 
 @onready var stretch_sound = $StretchSound
 @onready var launch_sound = $LaunchSound
+@onready var collision_sound = $CollisionSound
 
 const DRAG_LIMIT_MAX: Vector2 = Vector2(0, 60)
 const DRAG_LIMIT_MIN: Vector2 = Vector2(-60, 0)
 const IMPULSE_MULTIPLIER: float = 20.0
+const FIRE_DELAY: float = 0.25
 
 var dead: bool = false
 var dragging: bool = false
@@ -16,6 +18,7 @@ var dragged_vector: Vector2 = Vector2.ZERO
 var last_dragged_position: Vector2 = Vector2.ZERO
 var last_dragged_amount: float = 0.0
 var fired_time: float = 0.0
+var last_collision_count: int = 0
 
 func _ready():
 	start = global_position
@@ -24,7 +27,9 @@ func _physics_process(delta):
 	update_debug_label()
 	
 	if released:
-		pass
+		fired_time += delta
+		if fired_time > FIRE_DELAY:
+			play_collision()
 	else:
 		if !dragging:
 			return
@@ -35,12 +40,18 @@ func _physics_process(delta):
 				drag()
 
 func update_debug_label() -> void:
-	var info_str = "g_pos: %s\n" % Utils.vec2_to_str(global_position)
+	var info_str = "g_pos: %s contacts: %s\n" % [Utils.vec2_to_str(global_position), get_contact_count()]
 	info_str += "dragging: %s released: %s\n" % [dragging, released]
 	info_str += "start: %s drag_start: %s dragged_vector: %s\n" % [Utils.vec2_to_str(start), Utils.vec2_to_str(drag_start), Utils.vec2_to_str(dragged_vector)]
 	info_str += "last_dragged_pos: %s last_drag_amount: %0.1f\n" % [Utils.vec2_to_str(last_dragged_position), last_dragged_amount]
 	info_str += "angular v: %0.1f linear v: %s fired_time: %0.1f" % [angular_velocity, Utils.vec2_to_str(linear_velocity), fired_time]
 	SignalManager.on_update_debug_label.emit(info_str)
+
+func play_collision() -> void:
+	if last_collision_count == 0 && get_contact_count() > 0:
+		collision_sound.play()
+	
+	last_collision_count = get_contact_count()
 
 func grab() -> void:
 	dragging = true

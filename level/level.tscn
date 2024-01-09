@@ -12,7 +12,10 @@ position = Vector2(511, 304)
 texture = ExtResource("1_lcnx2")
 
 [node name="Cup" parent="." instance=ExtResource("2_oqdry")]
-position = Vector2(205, 455)
+position = Vector2(423, 414)
+
+[node name="Cup2" parent="." instance=ExtResource("2_oqdry")]
+position = Vector2(687, 397)
 
 [node name="DebugLabel" type="Label" parent="."]
 offset_left = 24.0
