@@ -64,7 +64,10 @@ func check_on_target():
 	if colliding_bodies.size() == 0:
 		return
 	
-	if colliding_bodies[0].is_in_group(GameManager.GROUP_CUP):
+	var cup = colliding_bodies[0]
+	
+	if cup.is_in_group(GameManager.GROUP_CUP):
+		cup.die()
 		die()
 
 func check_play_collision() -> void:
