@@ -1,6 +1,6 @@
 extends Node2D
 
-var animal_scene: PackedScene = preload("res://animals/animal.tscn")
+var animal_scene: PackedScene = preload("res://animal/animal.tscn")
 
 @onready var debug_label = $DebugLabel
 @onready var animal_start = $AnimalStart
