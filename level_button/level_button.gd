@@ -8,11 +8,14 @@ const HOVER_SCALE: Vector2 = Vector2(1.1, 1.1)
 @onready var level_label = $MarginContainer/VBoxContainer/LevelLabel
 @onready var score_label = $MarginContainer/VBoxContainer/ScoreLabel
 
+var level_scene: PackedScene
+
 func _ready():
 	level_label.text = str(level_number)
+	level_scene = load("res://level/level_%s.tscn" % level_number)
 
 func on_pressed():
-	pass # Replace with function body.
+	get_tree().change_scene_to_packed(level_scene)
 
 func on_mouse_entered():
 	scale = HOVER_SCALE
