@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dj18afoiwc8p4"]
+[gd_scene load_steps=6 format=3 uid="uid://dj18afoiwc8p4"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_gwgen"]
 [ext_resource type="Texture2D" uid="uid://v0dh28wdk1is" path="res://assets/scene/colored_castle.png" id="1_lcnx2"]
 [ext_resource type="PackedScene" uid="uid://cluuok5kr4hsj" path="res://game_ui/game_ui.tscn" id="2_ytiw8"]
 [ext_resource type="PackedScene" uid="uid://d4lcw0mnikpdt" path="res://water/water.tscn" id="4_4qm3k"]
+[ext_resource type="PackedScene" uid="uid://vt7jcsd55eyw" path="res://launch_area/launch_area.tscn" id="5_0yyjs"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_gwgen")
@@ -32,3 +33,6 @@ text"
 
 [node name="AnimalStart" type="Marker2D" parent="."]
 position = Vector2(150, 330)
+
+[node name="LaunchArea" parent="." instance=ExtResource("5_0yyjs")]
+position = Vector2(74, 342)
